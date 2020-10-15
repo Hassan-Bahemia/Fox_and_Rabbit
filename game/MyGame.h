@@ -1,8 +1,10 @@
 #pragma once
 
+#include "SpriteAgent.h"
+
 class CMyGame : public CGame
 {
-	CSprite rabbit, fox;
+	CSpriteAgent rabbit, fox;
 	CGraphics grass;
 public:
 	CMyGame(void);

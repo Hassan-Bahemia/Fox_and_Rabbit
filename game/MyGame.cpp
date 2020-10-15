@@ -16,59 +16,41 @@ CMyGame::~CMyGame(void)
 {
 }
 
-float rand(float range)
-{
-	return ((float)rand() / (float)RAND_MAX) * range * 2 - range;
-}
-
-CVector seek(CVector myPos, CVector myVel, CVector targetPos, float speed)
-{
-	// TO DO [1]: Implement the SEEK behaviour. It is used by the fox
-	return myVel;	// This line is NOT a part of the solutiuon - DELETE IT
-}
-
-CVector flee(CVector myPos, CVector myVel, CVector targetPos, float speed)
-{
-	// TO DO [2]: Implement the FLEE behaviour. It is used by the rabbit
-	return myVel;	// This line is NOT a part of the solutiuon - DELETE IT
-}
-
-CVector wander(CVector myPos, CVector myVel)
-{
-	// TO DO [4]: Implement the WANDER behaviour. It may also be used by the rabbit
-	return myVel;	// This line is NOT a part of the solutiuon - DELETE IT
-}
-
 /////////////////////////////////////////////////////
 // Per-Frame Callback Funtions (must be implemented!)
 
 void CMyGame::OnUpdate()
 {
+	// Restart the play automatically - 5 secs after Game Over
+	if (IsGameOver())
+	{
+		if (GetTime() > 5000)
+			NewGame();
+		return;
+	}
+
 	// Fox and Rabbit Maximum Speed Limit
 	// TO DO: You can experiment with different maximum speeds
-	float foxSpeed = 300.0;
-	float rabbitSpeed = 300.0;
+	float foxSpeed = 400;
+	float rabbitSpeed = 450;
+	float rabbitWanderSpeed = 300;
 
 	// Fox and Rabbit Steering Forces
 	CVector steerFox, steerRabbit;
 	
 	// Calculate the Fox Steering Force
-	steerFox = seek(fox.GetPosition(), fox.GetVelocity(), rabbit.GetPosition(), foxSpeed);
+	steerFox = fox.seek(rabbit.GetPosition(), foxSpeed);
 
 	// Calculate the Rabbit Steering Force
 	// TO DO [3]: Change the behaviour of the rabbit so there it flees only if its distance to the fox is less then 300 or 500.
 	//            Otherwise let it just wander around (casually nibbling grass)
 	// TO DO: Experiment with various values of the wander/flee threshold value
 	// INFO:  Distance rabbit-fox can be obtained with:  Distance(rabbit.GetPosition(), fox.GetPosition())
-	steerRabbit = flee(rabbit.GetPosition(), rabbit.GetVelocity(), fox.GetPosition(), rabbitSpeed);
+	steerRabbit = rabbit.wander(rabbitWanderSpeed);
 
 	// Apply the Steering Forces
-	fox.Accelerate(steerFox / 30);
-	rabbit.Accelerate(steerRabbit / 30);
-	
-	// Limit the speed - to their respective maximum speeds
-	if (fox.GetSpeed() > foxSpeed) fox.SetSpeed(foxSpeed);
-	if (rabbit.GetSpeed() > rabbitSpeed) rabbit.SetSpeed(rabbitSpeed);
+	fox.Accelerate(steerFox * (float)GetDeltaTime() / 1000.f);
+	rabbit.Accelerate(steerRabbit * (float)GetDeltaTime() / 1000.f);
 	
 	// Rotate both animals so that are always heading their motion direction
 	fox.SetRotation(fox.GetDirection());
@@ -80,15 +62,8 @@ void CMyGame::OnUpdate()
 
 	// keep the rabbit and the fox within the scene
 	extern CGameApp app;
-	if (rabbit.GetX() < 0) rabbit.SetX((float)app.GetWidth());
-	if (rabbit.GetX() > app.GetWidth()) rabbit.SetX(0);
-	if (rabbit.GetY() < 0) rabbit.SetY((float)app.GetHeight());
-	if (rabbit.GetY() >app.GetHeight()) rabbit.SetY(0);
-
-	if (fox.GetX() < 0) fox.SetX((float)app.GetWidth());
-	if (fox.GetX() > app.GetWidth()) fox.SetX(0);
-	if (fox.GetY() < 0) fox.SetY((float)app.GetHeight());
-	if (fox.GetY() >app.GetHeight()) fox.SetY(0);
+	rabbit.wrapToScreen(app.GetWidth(), app.GetHeight());
+	fox.wrapToScreen(app.GetWidth(), app.GetHeight());
 
 	// hit test condition for the game over
 	if (fox.HitTest(&rabbit))
