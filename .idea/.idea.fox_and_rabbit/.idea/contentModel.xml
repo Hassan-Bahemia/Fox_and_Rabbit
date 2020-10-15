@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\hbahe\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\hbahe\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_fox_and_rabbit.358430587.00" t="ExcludeRecursive" />
+    <e p="C:\Users\hbahe\Documents\Repo\Fox_and_Rabbit" t="IncludeFlat">
+      <e p="Debug" t="ExcludeRecursive" />
+      <e p="fox_and_rabbit.sln" t="IncludeFlat" />
+      <e p="game" t="IncludeRecursive">
+        <e p="Debug" t="ExcludeRecursive" />
+        <e p="game.vcxproj" t="IncludeRecursive" />
+        <e p="main.cpp" t="Include" />
+        <e p="MyGame.cpp" t="Include" />
+        <e p="MyGame.h" t="Include" />
+        <e p="SpriteAgent.cpp" t="Include" />
+        <e p="SpriteAgent.h" t="Include" />
+        <e p="stdafx.h" t="Include" />
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

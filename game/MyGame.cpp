@@ -42,11 +42,15 @@ void CMyGame::OnUpdate()
 	steerFox = fox.seek(rabbit.GetPosition(), foxSpeed);
 
 	// Calculate the Rabbit Steering Force
+	steerRabbit = rabbit.flee(rabbit.GetPosition(), rabbitSpeed);
+	if(rabbit.GetPosition() < 300)
+	{
+	    
+	}
 	// TO DO [3]: Change the behaviour of the rabbit so there it flees only if its distance to the fox is less then 300 or 500.
 	//            Otherwise let it just wander around (casually nibbling grass)
 	// TO DO: Experiment with various values of the wander/flee threshold value
 	// INFO:  Distance rabbit-fox can be obtained with:  Distance(rabbit.GetPosition(), fox.GetPosition())
-	steerRabbit = rabbit.wander(rabbitWanderSpeed);
 
 	// Apply the Steering Forces
 	fox.Accelerate(steerFox * (float)GetDeltaTime() / 1000.f);
