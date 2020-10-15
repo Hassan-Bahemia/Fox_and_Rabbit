@@ -22,13 +22,21 @@ CSpriteAgent::~CSpriteAgent()
 CVector CSpriteAgent::seek(CVector targetPos, float speed)
 {
 	// TO DO [1]: Implement the SEEK behaviour. It is used by the fox
-	return GetVelocity();	// This line is NOT a part of the solutiuon - DELETE IT
+	CVector desiredVelocity, steering;
+	desiredVelocity = targetPos - GetPos();
+	desiredVelocity = Normalise(desiredVelocity) * speed;
+	steering = desiredVelocity - GetVelocity();
+	return steering;
 }
 
 CVector CSpriteAgent::flee(CVector targetPos, float speed)
 {
 	// TO DO [2]: Implement the FLEE behaviour. It is used by the rabbit
-	return GetVelocity();	// This line is NOT a part of the solutiuon - DELETE IT
+	CVector desiredVelocity, steering;
+	desiredVelocity = GetPos() - targetPos;
+	desiredVelocity = Normalise(desiredVelocity) * speed;
+	steering = desiredVelocity - GetVelocity();
+	return steering;
 }
 
 float random()
@@ -39,7 +47,12 @@ float random()
 CVector CSpriteAgent::wander(float speed, float wanderDist, float wanderRadius)
 {
 	// TO DO [4]: Implement the WANDER behaviour. It may also be used by the rabbit
-	return GetVelocity();	// This line is NOT a part of the solutiuon - DELETE IT
+	//wanderTarget = CVector(0, 1);
+	wanderTarget += CVector(random() - 0.5, random() - 0.5);
+	wanderTarget = Normalise(wanderTarget);
+	CVector realTarget = GetPos() + Normalise(GetVelocity()) * wanderDist + wanderTarget * wanderRadius;
+	return seek(realTarget, speed);
+	
 }
 
 // Screen functions

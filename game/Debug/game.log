@@ -1,0 +1,12 @@
+﻿  SpriteAgent.cpp
+C:\Users\hbahe\Documents\Repo\Fox_and_Rabbit\game\SpriteAgent.cpp(51,51): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\hbahe\Documents\Repo\Fox_and_Rabbit\game\SpriteAgent.cpp(51,35): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  game.vcxproj -> C:\Users\hbahe\Documents\Repo\Fox_and_Rabbit\Debug\fox_and_rabbit.exe
